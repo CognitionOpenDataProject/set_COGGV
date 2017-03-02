@@ -2,7 +2,7 @@
 ## Article ID: COGGV
 ## Article doi: http://doi.org/10.1016/j.cognition.2016.10.018
 
-For this article you should focus on the findings reported in section 3.1. Across participants accuracy. Specifically, you should attempt to reproduce all descriptive and inferential analyses reported in the text below:
+For this article you should focus on the findings reported in section 3.1. Across participants accuracy. Specifically, you should attempt to reproduce all descriptive and inferential analyses reported in the text below and associated tables/figures:
 
 > Analysis of error rates (Fig. 3) revealed that the inversion effect was strongly reduced when there was no conflict between visual and actual gravity compared to the conditions were there was a conflict of gravity (t(21) = 2.72; p < 0.02; partial eta2 = 0.26).
 

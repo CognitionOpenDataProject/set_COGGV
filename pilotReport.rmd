@@ -151,30 +151,48 @@ The inversion effect was also computed on RT for conditions with gravity conflic
 
 ```{r}
 #Error Rate
-means_body_up <- error_analysis %>%
-  filter(body == "U") %>% #only want upright bodies
+means_ud <- error_analysis %>%
+  filter(body == "U", gravity == "D") %>%
   filter(!is.na(accuracy)) %>%
-  group_by(id, gravity) %>%
-  summarise(bu_accu_mean = mean(accuracy)) %>%
-  rename(idd = id,
-         gravityy = gravity)
+  group_by(id) %>%
+  summarise(ud_accu_mean = mean(accuracy))
 
-means_body_down <- error_analysis %>%
-  filter(body == "D") %>% #only want upside-down bodies
+means_du <- error_analysis %>%
+  filter(body == "D", gravity == "U") %>%
   filter(!is.na(accuracy)) %>%
-  group_by(id, gravity) %>%
-  summarise(bd_accu_mean = mean(accuracy))
+  group_by(id) %>%
+  summarise(du_accu_mean = mean(accuracy)) %>%
+  rename(idd = id)
 
-means_bodyud <- bind_cols(means_body_up, means_body_down) %>%
-  select(id, bu_accu_mean, bd_accu_mean, gravity) %>%
-  mutate
+means_uu <- error_analysis %>%
+  filter(body == "U", gravity == "U") %>%
+  filter(!is.na(accuracy)) %>%
+  group_by(id) %>%
+  summarise(uu_accu_mean = mean(accuracy)) %>%
+  rename(iddd = id)
 
-means_bodyud_ <- means_bodyud %>%
-    rename(bu = bu_accu_mean,
-         bd = bd_accu_mean)%>%
-  gather(position, errormean, bu, bd) %>%
-  select(id, position, errormean, gravity)
+means_dd <- error_analysis %>%
+  filter(body == "D", gravity == "D") %>%
+  filter(!is.na(accuracy)) %>%
+  group_by(id) %>%
+  summarise(dd_accu_mean = mean(accuracy)) %>%
+  rename(idddd = id)
 
+means_bodyud <- bind_cols(means_ud, means_du, means_uu, means_dd) %>%
+  select(id, ud_accu_mean, du_accu_mean, uu_accu_mean, dd_accu_mean) %>%
+  mutate(inversion_effect = ud_accu_mean - du_accu_mean, dd_accu_mean - uu_accu_mean)
+
+means <- error_analysis %>%
+  group_by(body, gravity, id) %>%
+  summarise(accuracy = mean(accuracy)) %>%
+  ungroup() %>%
+  mutate(body_gravity = paste(body, gravity, sep='')) %>%
+  select(-body, -gravity) %>%
+  spread(body_gravity, accuracy) %>%
+  mutate(yes_conflict = UD - DU,
+         no_conflict = DD - UU)
+
+t.test(means$yes_conflict, means$no_conflict, paired = TRUE)
 ```
 
 ## Step 5: Conclusion

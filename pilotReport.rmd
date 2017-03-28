@@ -26,7 +26,8 @@ Participants were seated in front of the computer screen in the dark and were as
 > Analysis of error rates (Fig. 3) revealed that the inversion effect was strongly reduced when there was no conflict between visual and actual gravity compared to the conditions were there was a conflict of gravity (t(21) = 2.72; p < 0.02; partial eta2 = 0.26).
 
 > The inversion effects were decomposed with Student’s t-test. Analysis revealed that in the conditions with upside down bodies, participants made more errors when gravity orientation was also inverted (gravity conflict, Fig. 1b) than when visual gravity was upright (Fig. 1d) (t(21) = 3.87; p < 0.001; partial eta2 = 0.42). In contrast, we found no differences between the conditions with upright bodies (Fig. 1a and c) (t(21) = 0.35; p = 0.73; partial eta2 = 0.006).
-The inversion effect was also computed on RT for conditions with gravity conflict (conditions b–a in Fig. 1) and conditions with- out gravity conflict (conditions d–c in Fig. 1). The normality of data distributions was tested using Kolmogorov-Smirnov test. No distributions differed from normality (all p > 0.05). The inversion effects were compared using Student’s t-tests. The threshold of statistical significance was set at 0.05.
+
+> The inversion effect was also computed on RT for conditions with gravity conflict (conditions b–a in Fig. 1) and conditions without gravity conflict (conditions d–c in Fig. 1). The normality of data distributions was tested using Kolmogorov-Smirnov test. No distributions differed from normality (all p > 0.05). The inversion effects were compared using Student’s t-tests. The threshold of statistical significance was set at 0.05.
 
 > The reaction time results (Fig. 4) revealed that the inversion effect was also strongly reduced in the condition in which there was no gravity conflict compared to the conditions in which there was a gravity conflict (t(21) = 2.87; p < 0.001; partial eta2 = 0.28). Analysis revealed that in conditions with upside down bodies relative to retinal coordinates, participants were slower when gravity orientation was also inverted (gravity conflict, Fig. 1b) than when visual gravity was upright relative to retinal coordinates (Fig. 1d) (t(21) = 4.10; p < 0.001; partial eta2 = 0.45). In contrast, we found no differences between the conditions with upright bodies (Fig. 1a and c) (t(21) = 0.13; p = 0.89; partial eta2 = 0.001)."
 
@@ -123,7 +124,8 @@ error_analysis <- expdata_tidy %>%
 #Only trials that corresponded to a correct response
 #Excluded reaction time slower than 200 ms or rt deviating from the mean by more or by less than 3 standard deviations
 rt_analysis <- expdata_tidy %>%
-   filter(!(is.na(rt)) & accuracy == 1 & rt > 200 & rt < 1792)
+  filter(!(is.na(rt)) & accuracy == 1 & rt > 200 & rt < 1792) %>%
+  select(id, body, gravity, rt)
 ```
 
 ### Descriptive statistics
@@ -142,46 +144,8 @@ ci95.norm <- function(x) {
 ```
 
 ### Inferential statistics
-"The inversion effect was calculated by the subtraction of the error rate measured in upright orientation from the error rate in inverted orientation (180) for each pair. This was calculated for conditions with gravity conflict (b-a conditions in Fig. 1) and conditions without gravity conflict (d-c conditions in Fig. 1). The inversion effects were compared using Student’s t-test. The threshold of statistical significance was set at 0.05. When needed, a Bonferroni correction for multiple comparisons was used. In this case, the corrected threshold of statistical significance was a = 0.025 (0.05/2)."
-
-> Analysis of error rates (Fig. 3) revealed that the inversion effect was strongly reduced when there was no conflict between visual and actual gravity compared to the conditions were there was a conflict of gravity (t(21) = 2.72; p < 0.02; partial eta2 = 0.26).
-
-> The inversion effects were decomposed with Student’s t-test. Analysis revealed that in the conditions with upside down bodies, participants made more errors when gravity orientation was also inverted (gravity conflict, Fig. 1b) than when visual gravity was upright (Fig. 1d) (t(21) = 3.87; p < 0.001; partial eta2 = 0.42). In contrast, we found no differences between the conditions with upright bodies (Fig. 1a and c) (t(21) = 0.35; p = 0.73; partial eta2 = 0.006).
-The inversion effect was also computed on RT for conditions with gravity conflict (conditions b–a in Fig. 1) and conditions with- out gravity conflict (conditions d–c in Fig. 1). The normality of data distributions was tested using Kolmogorov-Smirnov test. No distributions differed from normality (all p > 0.05). The inversion effects were compared using Student’s t-tests. The threshold of statistical significance was set at
-
 ```{r}
 #Error Rate
-means_ud <- error_analysis %>%
-  filter(body == "U", gravity == "D") %>%
-  filter(!is.na(accuracy)) %>%
-  group_by(id) %>%
-  summarise(ud_accu_mean = mean(accuracy))
-
-means_du <- error_analysis %>%
-  filter(body == "D", gravity == "U") %>%
-  filter(!is.na(accuracy)) %>%
-  group_by(id) %>%
-  summarise(du_accu_mean = mean(accuracy)) %>%
-  rename(idd = id)
-
-means_uu <- error_analysis %>%
-  filter(body == "U", gravity == "U") %>%
-  filter(!is.na(accuracy)) %>%
-  group_by(id) %>%
-  summarise(uu_accu_mean = mean(accuracy)) %>%
-  rename(iddd = id)
-
-means_dd <- error_analysis %>%
-  filter(body == "D", gravity == "D") %>%
-  filter(!is.na(accuracy)) %>%
-  group_by(id) %>%
-  summarise(dd_accu_mean = mean(accuracy)) %>%
-  rename(idddd = id)
-
-means_bodyud <- bind_cols(means_ud, means_du, means_uu, means_dd) %>%
-  select(id, ud_accu_mean, du_accu_mean, uu_accu_mean, dd_accu_mean) %>%
-  mutate(inversion_effect = ud_accu_mean - du_accu_mean, dd_accu_mean - uu_accu_mean)
-
 means <- error_analysis %>%
   group_by(body, gravity, id) %>%
   summarise(accuracy = mean(accuracy)) %>%
@@ -190,10 +154,35 @@ means <- error_analysis %>%
   select(-body, -gravity) %>%
   spread(body_gravity, accuracy) %>%
   mutate(yes_conflict = UD - DU,
-         no_conflict = DD - UU)
+         no_conflict = UU - DD,
+         upside_down = DD- DU,
+         upright = UU - UD)
 
 t.test(means$yes_conflict, means$no_conflict, paired = TRUE)
+t.test(means$upside_down)
+t.test(means$upright)
+
+#RT
+means_rt <- rt_analysis %>%
+  group_by(body, gravity, id) %>%
+  summarise(rt = mean(rt)) %>%
+  ungroup() %>%
+  mutate(body_gravity = paste(body, gravity, sep='')) %>%
+  select(-body, -gravity) %>%
+  spread(body_gravity, rt) %>%
+  mutate(yes_conflict = UD - DU,
+         no_conflict = UU - DD,
+         upside_down = DD- DU,
+         upright = UU - UD)
+
+t.test(means$yes_conflict, means$no_conflict, paired = TRUE)
+t.test(means$upside_down)
+t.test(means$upright)
 ```
+
+> Analysis of error rates (Fig. 3) revealed that the inversion effect was strongly reduced when there was no conflict between visual and actual gravity compared to the conditions were there was a conflict of gravity (t(21) = 2.72; p < 0.02; partial eta2 = 0.26).
+
+> The inversion effects were decomposed with Student’s t-test. Analysis revealed that in the conditions with upside down bodies, participants made more errors when gravity orientation was also inverted (gravity conflict, Fig. 1b) than when visual gravity was upright (Fig. 1d) (t(21) = 3.87; p < 0.001; partial eta2 = 0.42). In contrast, we found no differences between the conditions with upright bodies (Fig. 1a and c) (t(21) = 0.35; p = 0.73; partial eta2 = 0.006).
 
 ## Step 5: Conclusion
 

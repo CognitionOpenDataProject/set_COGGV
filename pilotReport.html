@@ -224,9 +224,6 @@ div.tocify {
 <div id="pilot-cinoo-lee" class="section level4">
 <h4>Pilot: Cinoo Lee</h4>
 </div>
-<div id="co-pilot-tom-hardwicke" class="section level4">
-<h4>Co-pilot: Tom Hardwicke</h4>
-</div>
 <div id="start-date-03172017" class="section level4">
 <h4>Start date: 03/17/2017</h4>
 </div>
@@ -267,7 +264,7 @@ library(CODreports) # custom report functions</code></pre>
 </div>
 <div id="step-2-load-data" class="section level2">
 <h2>Step 2: Load data</h2>
-<pre class="r"><code>expdata &lt;- read_excel(&quot;~/Documents/Classes/Winter2017/PSYC254/Pset3/set_COGGV/data/data.xlsx&quot;, sheet = 2)
+<pre class="r"><code>expdata &lt;- read_excel(&quot;data/data.xlsx&quot;, sheet = 2)
 summary(expdata)</code></pre>
 <pre><code>##   Subject_nb         Condition             BU GD            BD GU       
 ##  Length:4224        Length:4224        Min.   :0.0000   Min.   :0.0000  
@@ -568,17 +565,17 @@ t.test(means_rt$yes_conflict, means_rt$no_conflict, paired = TRUE)</code></pre>
 ##  language (EN)                        
 ##  collate  en_US.UTF-8                 
 ##  tz       America/Los_Angeles         
-##  date     2017-03-27                  
+##  date     2017-03-30                  
 ## 
 ##  package    * version date      
 ##  assertthat   0.1     2013-12-06
 ##  backports    1.0.5   2017-01-18
-##  broom        0.4.1   2016-06-24
-##  CODreports * 0.1     2017-03-12
-##  colorspace   1.2-6   2015-03-11
+##  broom        0.4.2   2017-02-13
+##  CODreports * 0.1     2017-03-26
+##  colorspace   1.3-2   2016-12-14
 ##  DBI          0.5-1   2016-09-10
 ##  devtools     1.12.0  2016-06-24
-##  digest       0.6.12  2017-01-27
+##  digest       0.6.11  2017-01-03
 ##  dplyr      * 0.5.0   2016-06-24
 ##  evaluate     0.10    2016-10-11
 ##  forcats      0.2.0   2017-01-23
@@ -602,76 +599,76 @@ t.test(means_rt$yes_conflict, means_rt$no_conflict, paired = TRUE)</code></pre>
 ##  munsell      0.4.3   2016-02-13
 ##  nlme         3.1-128 2016-05-10
 ##  plyr         1.8.4   2016-06-08
-##  psych        1.6.9   2016-09-17
+##  psych        1.6.12  2017-01-08
 ##  purrr      * 0.2.2   2016-06-18
-##  R6           2.1.3   2016-08-19
-##  Rcpp         0.12.7  2016-09-05
+##  R6           2.2.0   2016-10-05
+##  Rcpp         0.12.9  2017-01-14
 ##  readr      * 1.0.0   2016-08-03
 ##  readxl     * 0.1.1   2016-03-28
 ##  reshape2     1.4.2   2016-10-22
-##  rmarkdown    1.3     2016-12-21
+##  rmarkdown    1.3     2017-02-08
 ##  rprojroot    1.2     2017-01-16
 ##  rvest        0.3.2   2016-06-17
 ##  scales       0.4.1   2016-11-09
-##  stringi      1.1.1   2016-05-27
+##  stringi      1.1.2   2016-10-01
 ##  stringr      1.2.0   2017-02-18
 ##  tibble     * 1.2     2016-08-26
 ##  tidyr      * 0.6.1   2017-01-10
 ##  tidyverse  * 1.1.1   2017-01-27
 ##  withr        1.0.2   2016-06-20
-##  xml2         1.1.0   2017-01-07
+##  xml2         1.1.1   2017-01-24
 ##  yaml         2.1.14  2016-11-12
 ##  source                                              
 ##  CRAN (R 3.3.0)                                      
 ##  CRAN (R 3.3.2)                                      
-##  CRAN (R 3.3.0)                                      
-##  Github (CognitionOpenDataProject/CODreports@e90fdef)
-##  CRAN (R 3.3.0)                                      
-##  CRAN (R 3.3.0)                                      
-##  CRAN (R 3.3.0)                                      
-##  cran (@0.6.12)                                      
-##  CRAN (R 3.3.0)                                      
-##  cran (@0.10)                                        
 ##  CRAN (R 3.3.2)                                      
-##  CRAN (R 3.3.2)                                      
-##  CRAN (R 3.3.2)                                      
-##  CRAN (R 3.3.0)                                      
-##  CRAN (R 3.3.0)                                      
-##  CRAN (R 3.3.0)                                      
+##  Github (CognitionOpenDataProject/CODreports@b5f7566)
 ##  CRAN (R 3.3.2)                                      
 ##  CRAN (R 3.3.0)                                      
 ##  CRAN (R 3.3.0)                                      
 ##  CRAN (R 3.3.2)                                      
-##  cran (@1.15.1)                                      
+##  CRAN (R 3.3.0)                                      
+##  CRAN (R 3.3.0)                                      
+##  cran (@0.2.0)                                       
 ##  CRAN (R 3.3.2)                                      
-##  CRAN (R 3.3.0)                                      
-##  CRAN (R 3.3.0)                                      
-##  CRAN (R 3.3.0)                                      
-##  CRAN (R 3.3.0)                                      
+##  CRAN (R 3.3.2)                                      
 ##  CRAN (R 3.3.0)                                      
 ##  CRAN (R 3.3.0)                                      
 ##  CRAN (R 3.3.0)                                      
 ##  CRAN (R 3.3.2)                                      
 ##  CRAN (R 3.3.0)                                      
 ##  CRAN (R 3.3.0)                                      
+##  CRAN (R 3.3.2)                                      
+##  CRAN (R 3.3.2)                                      
+##  CRAN (R 3.3.2)                                      
 ##  CRAN (R 3.3.0)                                      
 ##  CRAN (R 3.3.0)                                      
 ##  CRAN (R 3.3.0)                                      
 ##  CRAN (R 3.3.0)                                      
 ##  CRAN (R 3.3.0)                                      
 ##  CRAN (R 3.3.0)                                      
-##  CRAN (R 3.3.1)                                      
+##  CRAN (R 3.3.0)                                      
 ##  CRAN (R 3.3.2)                                      
 ##  CRAN (R 3.3.0)                                      
 ##  CRAN (R 3.3.2)                                      
 ##  CRAN (R 3.3.0)                                      
+##  CRAN (R 3.3.0)                                      
+##  cran (@0.12.9)                                      
+##  CRAN (R 3.3.0)                                      
+##  CRAN (R 3.3.0)                                      
+##  CRAN (R 3.3.0)                                      
+##  Github (rstudio/rmarkdown@d1ba313)                  
 ##  CRAN (R 3.3.2)                                      
+##  CRAN (R 3.3.0)                                      
+##  CRAN (R 3.3.2)                                      
+##  CRAN (R 3.3.0)                                      
+##  cran (@1.2.0)                                       
 ##  CRAN (R 3.3.0)                                      
 ##  CRAN (R 3.3.2)                                      
 ##  CRAN (R 3.3.2)                                      
 ##  CRAN (R 3.3.0)                                      
-##  CRAN (R 3.3.2)                                      
-##  cran (@2.1.14)</code></pre>
+##  cran (@1.1.1)                                       
+##  CRAN (R 3.3.2)</code></pre>
 </div>
 
 

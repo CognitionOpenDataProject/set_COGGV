@@ -8,7 +8,6 @@ output:
 
 #### Article ID: COGGV
 #### Pilot: Cinoo Lee
-#### Co-pilot: Tom Hardwicke  
 #### Start date: 03/17/2017
 #### End date: 03/27/2017  
 
@@ -52,7 +51,7 @@ library(CODreports) # custom report functions
 ## Step 2: Load data
 
 ```{r}
-expdata <- read_excel("~/Documents/Classes/Winter2017/PSYC254/Pset3/set_COGGV/data/data.xlsx", sheet = 2)
+expdata <- read_excel("data/data.xlsx", sheet = 2)
 summary(expdata)
 
 expdata <- expdata %>%

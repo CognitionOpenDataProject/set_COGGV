@@ -366,7 +366,7 @@ expdata_tidy &lt;- bind_cols(expdata_accuracy, expdata_rt) %&gt;%
 sd_threshold_upper &lt;- mean(expdata_tidy$rt)+(sd(expdata_tidy$rt)*3)
 rt_tidy &lt;- expdata_tidy %&gt;%
   filter(accuracy == 1) %&gt;%
-  filter(rt &gt;= 200 &amp; rt &gt;= sd_threshold_lower &amp; rt &lt;= sd_threshold_upper) %&gt;%
+  filter(rt &gt;= 200 &amp; rt &gt; sd_threshold_lower &amp; rt &lt; sd_threshold_upper) %&gt;%
   select(id, body, gravity, rt)</code></pre>
 <pre class="r"><code>error_tidy &lt;- expdata_tidy %&gt;%
   select(id, body, gravity, accuracy)</code></pre>

@@ -130,7 +130,7 @@ sd_threshold_lower <- mean(expdata_tidy$rt)-(sd(expdata_tidy$rt)*3)
 sd_threshold_upper <- mean(expdata_tidy$rt)+(sd(expdata_tidy$rt)*3)
 rt_tidy <- expdata_tidy %>%
   filter(accuracy == 1) %>%
-  filter(rt >= 200 & rt >= sd_threshold_lower & rt <= sd_threshold_upper) %>%
+  filter(rt >= 200 & rt > sd_threshold_lower & rt < sd_threshold_upper) %>%
   select(id, body, gravity, rt)
 ```
 

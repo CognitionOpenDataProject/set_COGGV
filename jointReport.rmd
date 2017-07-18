@@ -10,7 +10,7 @@ output:
 #### Pilot: Cinoo Lee
 #### Co-pilot: Tom Hardwicke
 #### Start date: 03/17/2017
-#### End date: 03/27/2017  
+#### End date: 
 
 -------
 

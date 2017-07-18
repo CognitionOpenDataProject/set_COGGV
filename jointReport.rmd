@@ -261,8 +261,8 @@ codReport(Report_Type = 'joint',
           Article_ID = 'COGGV', 
           Insufficient_Information_Errors = 0,
           Decision_Errors = 0, 
-          Major_Numerical_Errors = 0, 
-          Minor_Numerical_Errors = 0,
+          Major_Numerical_Errors = 5, 
+          Minor_Numerical_Errors = 4,
           Author_Assistance = F)
 ```
 

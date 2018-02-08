@@ -345,7 +345,7 @@ We've encounted a number of major numerical errors here and it is unclear why. I
 
 ```{r}
 reportObject$Article_ID <- "COGGV"
-reportObject$affectsConclusion <- "unclear"
+reportObject$affectsConclusion <- "no"
 reportObject$error_typo <- 0
 reportObject$error_specification <- 1
 reportObject$error_analysis <- 0
